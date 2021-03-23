@@ -49,21 +49,27 @@
 
             const firestore = firebase.firestore()
                 firestore
-                    .collection("shop").doc("food").set({
+                    .collection("shop").doc("food1").set({
                         name:"fried Chicken",
                         value:30,
                         avaliable:true
                     })
                 firestore
-                    .collection("shop").doc("food").set({
+                    .collection("shop").doc("food2").set({
                         name:"Rice",
                         value:10,
                         avaliable:true
                     })
                 firestore
-                    .collection("shop").doc("food").set({
+                    .collection("shop").doc("food3").set({
                         name:"Tom yum",
                         value:99,
+                        avaliable:true
+                    })
+                firestore
+                    .collection("shop").doc("food").set({
+                        name:"Boil Egg",
+                        value:5,
                         avaliable:true
                     })
 
@@ -83,17 +89,17 @@
                     /**
                      * * Do something with Firestore here
                      */
-                    firestore.collection("shop").doc("food").get().then(function(snapshot){
-                        snapshot.forEach(function(docs){
-                            console.log(docs.data())
+                    firestore.collection("shop").get().then(function(snapshot){
+                        snapshot.forEach(function(doc){
+                            console.log(doc.data())
                         })
                     })
                 })
                 id("showsome").on("click", () => {
                     id("title").textContent = "Showless"
                     firestore.collection("shop").where('value','>', 10).get().then(function(snapshot){
-                        snapshot.forEach(function(docs){
-                            console.log(docs.data())
+                        snapshot.forEach(function(doc){
+                            console.log(doc.data())
                         })
                     })
                     /**
