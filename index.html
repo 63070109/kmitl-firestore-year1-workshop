@@ -3,6 +3,7 @@
     <head>
         <script src=https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js></script>
         <script src=https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
 
         <script>
             // Helper script
@@ -35,15 +36,36 @@
         <script defer>
             // Firebase Setup
             const firebaseConfig = {
-                /**
-                 * ! Place connection script here
-                 * ...
-                 */
+                apiKey: "AIzaSyA5hVDtjwR1PzsXNqMFVsx1HxquUHSOdXY",
+                authDomain: "test-5712b.firebaseapp.com",
+                projectId: "test-5712b",
+                storageBucket: "test-5712b.appspot.com",
+                messagingSenderId: "4498778948",
+                appId: "1:4498778948:web:5eaaa79cdb7e71098c8511",
+                measurementId: "G-0ZBDCB8D8T"
             }
 
             firebase.initializeApp(firebaseConfig)
 
             const firestore = firebase.firestore()
+                firestore
+                    .collection("shop").doc("food").set({
+                        name:"fried Chicken",
+                        value:30,
+                        avaliable:true
+                    })
+                firestore
+                    .collection("shop").doc("food").set({
+                        name:"Rice",
+                        value:10,
+                        avaliable:true
+                    })
+                firestore
+                    .collection("shop").doc("food").set({
+                        name:"Tom yum",
+                        value:99,
+                        avaliable:true
+                    })
 
             /**
              * * Main Runtime
@@ -56,8 +78,24 @@
                  * ? The function will run.
                  * */
                 id("read").on("click", () => {
-                    id("title").textContent = "Clicked"
+                    id("title").textContent = "Showall"
 
+                    /**
+                     * * Do something with Firestore here
+                     */
+                    firestore.collection("shop").doc("food").get().then(function(snapshot){
+                        snapshot.forEach(function(docs){
+                            console.log(docs.data())
+                        })
+                    })
+                })
+                id("showsome").on("click", () => {
+                    id("title").textContent = "Showless"
+                    firestore.collection("shop").where('value','>', 10).get().then(function(snapshot){
+                        snapshot.forEach(function(docs){
+                            console.log(docs.data())
+                        })
+                    })
                     /**
                      * * Do something with Firestore here
                      */
@@ -67,6 +105,7 @@
     </head>
     <body>
         <h1 id=title>---</h1>
-        <button id=read>Read</button>
+        <button id=read>Show</button>
+        <button id=showsome>ShowLess</button>
     </body>
 </html>
